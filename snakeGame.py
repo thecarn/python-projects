@@ -13,7 +13,8 @@ snk_y = sh//2
 snake = [
     [snk_y, snk_x],
     [snk_y, snk_x-1],
-    [snk_y, snk_x-2]
+    [snk_y, snk_x-2],
+    [snk_y, snk_x-3]
 ]
 
 food = [sh//2, sw//2]
@@ -55,5 +56,8 @@ while True:
     else:
         tail = snake.pop()
         w.addch(tail[0], tail[1], ' ')
+        
 
     w.addch(snake[0][0], snake[0][1], curses.ACS_CKBOARD)
+    
+    
