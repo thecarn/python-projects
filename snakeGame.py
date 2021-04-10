@@ -7,7 +7,8 @@ sh, sw = s.getmaxyx()
 w = curses.newwin(sh, sw, 0, 0)
 w.keypad(1)
 w.timeout(50)
-
+print('max height: ', sh)
+print('max width: ', sw)
 snk_x = sw//4
 snk_y = sh//2
 snake = [
@@ -33,8 +34,12 @@ while True:
         print('hit the ceiling, you lose!')
         curses.endwin()
         quit()
-    elif snake[0][1] in [0, sw]:
-        print('hit the wall, you lose!')
+    elif snake[0][1] == 0:
+        print('hit the left wall, you lose!')
+        curses.endwin()
+        quit()
+    elif snake[0][1] == sw:
+        print('hit the right wall, you lose!')
         curses.endwin()
         quit()
     elif snake[0] in snake[1:]:
@@ -69,7 +74,24 @@ while True:
         tail = snake.pop()
         w.addch(tail[0], tail[1], ' ')
         
-        
+    
+    if snake[0][0] in [0, sh]:
+        print('hit the ceiling, you lose!')
+        curses.endwin()
+        quit()
+    elif snake[0][1] == 0:
+        print('hit the left wall, you lose!')
+        curses.endwin()
+        quit()
+    elif snake[0][1] == sw:
+        print('hit the right wall, you lose!')
+        curses.endwin()
+        quit()
+    elif snake[0] in snake[1:]:
+        print('ran into snake body, you lose!')
+        curses.endwin()
+        quit()
+    
 
     w.addch(snake[0][0], snake[0][1], curses.ACS_CKBOARD)
     
