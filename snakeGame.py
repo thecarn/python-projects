@@ -21,12 +21,24 @@ food = [sh//2, sw//2]
 w.addch(food[0], food[1], curses.ACS_PI)
 
 key = curses.KEY_RIGHT
-
+i = 0
 while True:
+    i += 1
+    print('frame: ', i)
+    print('snake position: ', snake)
     next_key = w.getch()
     key = key if next_key == -1 else next_key
     
-    if snake[0][0] in [0, sh] or snake[0][1] in [0, sw] or snake[0] in snake[1:]:
+    if snake[0][0] in [0, sh]:
+        print('hit the ceiling, you lose!')
+        curses.endwin()
+        quit()
+    elif snake[0][1] in [0, sw]:
+        print('hit the wall, you lose!')
+        curses.endwin()
+        quit()
+    elif snake[0] in snake[1:]:
+        print('ran into snake body, you lose!')
         curses.endwin()
         quit()
     
