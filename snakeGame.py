@@ -6,7 +6,7 @@ curses.curs_set(0)
 sh, sw = s.getmaxyx()
 w = curses.newwin(sh, sw, 0, 0)
 w.keypad(1)
-w.timeout(100)
+w.timeout(50)
 
 snk_x = sw//4
 snk_y = sh//2
@@ -56,6 +56,7 @@ while True:
     else:
         tail = snake.pop()
         w.addch(tail[0], tail[1], ' ')
+        
         
 
     w.addch(snake[0][0], snake[0][1], curses.ACS_CKBOARD)
