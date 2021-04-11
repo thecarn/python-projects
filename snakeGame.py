@@ -43,7 +43,7 @@ def runGame():
 
         new_head = [snake[0][0], snake[0][1]]
 
-        new_head = generateNewHead(new_head, key, currentDirection)
+        new_head, key, currentDirection = generateMovementInfo(new_head, key, currentDirection)
 
         snake.insert(0, new_head)
 
@@ -63,7 +63,7 @@ def runGame():
                 w.addch(tail[0], tail[1], ' ')
             except:
                 print('addch error')
-        checkSnake(snake, sh, sw)
+        #checkSnake(snake, sh, sw)
         try:
             w.addch(snake[0][0], snake[0][1], curses.ACS_CKBOARD)
         except:
@@ -92,20 +92,103 @@ def checkSnake(snake, sh, sw):
         curses.endwin()
         quit()
 
-def generateNewHead(new_head, key, currentDirection):
+def generateMovementInfo(new_head, key, currentDirection):
     print('move snake')
-    if key == curses.KEY_DOWN:
-        new_head[0] += 1
-        return new_head
-    if key == curses.KEY_UP:
-        new_head[0] -= 1
-        return new_head
-    if key == curses.KEY_LEFT:
-        new_head[1] -= 1
-        return new_head
-    if key == curses.KEY_RIGHT:
-        new_head[1] += 1
-        return new_head
+    
+    if currentDirection == curses.KEY_RIGHT:\
+
+        if key == curses.KEY_LEFT:
+            #continue going right edgecase
+            new_head[1] += 1
+            key = currentDirection
+            return new_head, key, currentDirection
+
+        if key == curses.KEY_DOWN:
+            new_head[0] += 1
+            currentDirection = key
+            return new_head, key, currentDirection
+
+        if key == curses.KEY_UP:
+            new_head[0] -= 1
+            currentDirection = key
+            return new_head, key, currentDirection
+
+        if key == curses.KEY_RIGHT:
+            new_head[1] += 1
+            currentDirection = key
+            return new_head, key, currentDirection
+
+    elif currentDirection == curses.KEY_LEFT:
+
+        if key == curses.KEY_LEFT:
+            new_head[1] -= 1
+            currentDirection = key
+            return new_head, key, currentDirection
+
+        if key == curses.KEY_DOWN:
+            new_head[0] += 1
+            currentDirection = key
+            return new_head, key, currentDirection
+
+        if key == curses.KEY_UP:
+            new_head[0] -= 1
+            currentDirection = key
+            return new_head, key, currentDirection
+
+        if key == curses.KEY_RIGHT:
+            #continue going left edgecase
+            new_head[1] -= 1
+            key = curses.KEY_LEFT
+            return new_head, key, currentDirection
+
+    elif currentDirection == curses.KEY_UP:
+
+        if key == curses.KEY_LEFT:
+            new_head[1] -= 1
+            currentDirection = key
+            return new_head, key, currentDirection
+
+        if key == curses.KEY_DOWN:
+            #continue going up edgecase
+            new_head[0] -= 1
+            key = currentDirection
+            return new_head, key, currentDirection
+
+        if key == curses.KEY_UP:
+            new_head[0] -= 1
+            currentDirection = key
+            return new_head, key, currentDirection
+
+        if key == curses.KEY_RIGHT:
+            new_head[1] += 1
+            currentDirection = key
+            return new_head, key, currentDirection
+
+    elif currentDirection == curses.KEY_DOWN:
+
+        if key == curses.KEY_LEFT:
+            new_head[1] -= 1
+            currentDirection = key
+            return new_head, key, currentDirection
+
+        if key == curses.KEY_DOWN:
+            new_head[0] += 1
+            currentDirection = key
+            return new_head, key, currentDirection
+
+        if key == curses.KEY_UP:
+            #continue going down edgecase
+            new_head[0] += 1
+            key = currentDirection
+            return new_head, key, currentDirection
+
+        if key == curses.KEY_RIGHT:
+            new_head[1] += 1
+            currentDirection = key
+            return new_head, key, currentDirection
+
+
+
 
 
 def main():
