@@ -37,27 +37,8 @@ def runGame():
         next_key = w.getch()
         key = key if next_key == -1 else next_key
         
-        if snake[0][0] == sh:
-            print('hit the floor, you lose!')
-            curses.endwin()
-            quit()
-        elif snake[0][0] == -1:
-            print('hit the ceiling, you lose!')
-            curses.endwin()
-            quit()
-        elif snake[0][1] == -1:
-            print('hit the left wall, you lose!')
-            curses.endwin()
-            quit()
-        elif snake[0][1] == sw:
-            print('hit the right wall, you lose!')
-            curses.endwin()
-            quit()
-        elif snake[0] in snake[1:]:
-            print('ran into snake body, you lose!')
-            curses.endwin()
-            quit()
-    
+        checkSnake(snake, sh, sw)
+
 
         new_head = [snake[0][0], snake[0][1]]
 
@@ -90,33 +71,37 @@ def runGame():
             
             
             
-        if snake[0][0] == sh:
-            print('hit the floor, you lose!')
-            curses.endwin()
-            quit()
-        elif snake[0][0] == -1:
-            print('hit the ceiling, you lose!')
-            curses.endwin()
-            quit()
-        elif snake[0][1] == -1:
-            print('hit the left wall, you lose!')
-            curses.endwin()
-            quit()
-        elif snake[0][1] == sw:
-            print('hit the right wall, you lose!')
-            curses.endwin()
-            quit()
-        elif snake[0] in snake[1:]:
-            print('ran into snake body, you lose!')
-            curses.endwin()
-            quit()
-    
+        checkSnake(snake, sh, sw)
+
+
         try:
             w.addch(snake[0][0], snake[0][1], curses.ACS_CKBOARD)
         except:
             print('addch error')
         
-    
+def checkSnake(snake, sh, sw):
+    print('check snake')
+    if snake[0][0] == sh:
+        print('hit the floor, you lose!')
+        curses.endwin()
+        quit()
+    elif snake[0][0] == -1:
+        print('hit the ceiling, you lose!')
+        curses.endwin()
+        quit()
+    elif snake[0][1] == -1:
+        print('hit the left wall, you lose!')
+        curses.endwin()
+        quit()
+    elif snake[0][1] == sw:
+        print('hit the right wall, you lose!')
+        curses.endwin()
+        quit()
+    elif snake[0] in snake[1:]:
+        print('ran into snake body, you lose!')
+        curses.endwin()
+        quit()
+
 
 
 def main():
