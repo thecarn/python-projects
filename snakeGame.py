@@ -92,7 +92,7 @@ def checkSnake(snake, sh, sw):
 def generateMovementInfo(new_head, key, currentDirection):
     print('move snake')
     
-    if currentDirection == curses.KEY_RIGHT:\
+    if currentDirection == curses.KEY_RIGHT:
 
         if key == curses.KEY_LEFT:
             #continue going right edgecase
@@ -190,7 +190,7 @@ def generateMovementInfo(new_head, key, currentDirection):
 
 def main():
     print('main')
-    var = input('Enter game mode: ')
+    #var = input('Enter game mode: ')
     runGame()
 
 main()
