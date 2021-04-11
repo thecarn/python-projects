@@ -63,7 +63,7 @@ def runGame():
                 w.addch(tail[0], tail[1], ' ')
             except:
                 print('addch error')
-        #checkSnake(snake, sh, sw)
+        checkSnake(snake, sh, sw)
         try:
             w.addch(snake[0][0], snake[0][1], curses.ACS_CKBOARD)
         except:
