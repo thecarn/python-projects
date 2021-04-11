@@ -29,6 +29,7 @@ def runGame():
     food = [sh//2, sw//2]
     w.addch(food[0], food[1], curses.ACS_PI)
     key = curses.KEY_RIGHT
+    currentDirection = curses.KEY_RIGHT
     i = 0
     while True:
         i += 1
@@ -42,14 +43,7 @@ def runGame():
 
         new_head = [snake[0][0], snake[0][1]]
 
-        if key == curses.KEY_DOWN:
-            new_head[0] += 1
-        if key == curses.KEY_UP:
-            new_head[0] -= 1
-        if key == curses.KEY_LEFT:
-            new_head[1] -= 1
-        if key == curses.KEY_RIGHT:
-            new_head[1] += 1
+        new_head = generateNewHead(new_head, key, currentDirection)
 
         snake.insert(0, new_head)
 
@@ -63,17 +57,13 @@ def runGame():
                 food = nf if nf not in snake else None
             w.addch(food[0], food[1], curses.ACS_PI)
         else:
+            
             tail = snake.pop()
             try:
                 w.addch(tail[0], tail[1], ' ')
             except:
                 print('addch error')
-            
-            
-            
         checkSnake(snake, sh, sw)
-
-
         try:
             w.addch(snake[0][0], snake[0][1], curses.ACS_CKBOARD)
         except:
@@ -102,10 +92,25 @@ def checkSnake(snake, sh, sw):
         curses.endwin()
         quit()
 
+def generateNewHead(new_head, key, currentDirection):
+    print('move snake')
+    if key == curses.KEY_DOWN:
+        new_head[0] += 1
+        return new_head
+    if key == curses.KEY_UP:
+        new_head[0] -= 1
+        return new_head
+    if key == curses.KEY_LEFT:
+        new_head[1] -= 1
+        return new_head
+    if key == curses.KEY_RIGHT:
+        new_head[1] += 1
+        return new_head
 
 
 def main():
     print('main')
+    var = input('Enter game mode: ')
     runGame()
 
 main()
