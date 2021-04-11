@@ -12,9 +12,12 @@ def runGame():
     sh, sw = s.getmaxyx()
     w = curses.newwin(sh, sw, 0, 0)
     w.keypad(1)
-    w.timeout(50)
+    w.timeout(350)
 
-    snk_x = sw//4
+    print('height: ', sh)
+    print('width: ', sw)
+
+    snk_x = sw//2
     snk_y = sh//2
     snake = [
         [snk_y, snk_x],
@@ -34,19 +37,27 @@ def runGame():
         next_key = w.getch()
         key = key if next_key == -1 else next_key
         
-        if snake[0][0] in [0, sh]:
+        if snake[0][0] == sh:
+            print('hit the floor, you lose!')
+            curses.endwin()
+            quit()
+        elif snake[0][0] == -1:
             print('hit the ceiling, you lose!')
             curses.endwin()
             quit()
-        elif snake[0][1] in [0, sw]:
-            print('hit the wall, you lose!')
+        elif snake[0][1] == -1:
+            print('hit the left wall, you lose!')
+            curses.endwin()
+            quit()
+        elif snake[0][1] == sw:
+            print('hit the right wall, you lose!')
             curses.endwin()
             quit()
         elif snake[0] in snake[1:]:
             print('ran into snake body, you lose!')
             curses.endwin()
             quit()
-        
+    
 
         new_head = [snake[0][0], snake[0][1]]
 
@@ -72,11 +83,39 @@ def runGame():
             w.addch(food[0], food[1], curses.ACS_PI)
         else:
             tail = snake.pop()
-            w.addch(tail[0], tail[1], ' ')
+            try:
+                w.addch(tail[0], tail[1], ' ')
+            except:
+                print('addch error')
             
             
-
-        w.addch(snake[0][0], snake[0][1], curses.ACS_CKBOARD)
+            
+        if snake[0][0] == sh:
+            print('hit the floor, you lose!')
+            curses.endwin()
+            quit()
+        elif snake[0][0] == -1:
+            print('hit the ceiling, you lose!')
+            curses.endwin()
+            quit()
+        elif snake[0][1] == -1:
+            print('hit the left wall, you lose!')
+            curses.endwin()
+            quit()
+        elif snake[0][1] == sw:
+            print('hit the right wall, you lose!')
+            curses.endwin()
+            quit()
+        elif snake[0] in snake[1:]:
+            print('ran into snake body, you lose!')
+            curses.endwin()
+            quit()
+    
+        try:
+            w.addch(snake[0][0], snake[0][1], curses.ACS_CKBOARD)
+        except:
+            print('addch error')
+        
     
 
 
