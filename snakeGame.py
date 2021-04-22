@@ -8,8 +8,9 @@ TODO:
 3: GET RID OF GRAPHICAL BUG
 4: GET RID OF WIDTH OF SNAKE ISSUE WHEN MOVING UP/DOWN VS MOVING LEFT/RIGHT
 5: MAKE GAME MORE INTERESTING IN SOME WAY, ADD AN AI SNAKE THAT COMPETES OR SOMETHING LOL
+6: ADD POINTS
+7: INCREASE GROWTH RATE
 '''
-
 def runGame():
     print('game running')
     s = curses.initscr()
@@ -17,7 +18,7 @@ def runGame():
     sh, sw = s.getmaxyx()
     w = curses.newwin(sh, sw, 0, 0)
     w.keypad(1)
-    w.timeout(350)
+    w.timeout(1000)
 
     print('height: ', sh)
     print('width: ', sw)
@@ -29,7 +30,8 @@ def runGame():
         [snk_y, snk_x-1],
         [snk_y, snk_x-2],
         [snk_y, snk_x-3],
-        [snk_y, snk_x-4]
+        [snk_y, snk_x-4],
+
     ]
 
     food = [sh//2, sw//2]
@@ -37,15 +39,17 @@ def runGame():
     key = curses.KEY_RIGHT
     currentDirection = curses.KEY_RIGHT
     i = 0
+    points = 0
     while True:
         i += 1
         print('frame: ', i)
         print('snake position: ', snake)
         next_key = w.getch()
         key = key if next_key == -1 else next_key
-        
-        checkSnake(snake, sh, sw)
 
+        
+
+        checkSnake(snake, sh, sw, points)
 
         new_head = [snake[0][0], snake[0][1]]
 
@@ -62,39 +66,46 @@ def runGame():
                 ]
                 food = nf if nf not in snake else None
             w.addch(food[0], food[1], curses.ACS_PI)
+            points += 100
         else:
             
             tail = snake.pop()
             try:
                 w.addch(tail[0], tail[1], ' ')
+                
             except:
                 print('addch error')
-        checkSnake(snake, sh, sw)
+        checkSnake(snake, sh, sw, points)
         try:
             w.addch(snake[0][0], snake[0][1], curses.ACS_CKBOARD)
         except:
             print('addch error')
         
-def checkSnake(snake, sh, sw):
+def checkSnake(snake, sh, sw, points):
     print('check snake')
     if snake[0][0] == sh:
         print('hit the floor, you lose!')
+        print('score: ', points)
         curses.endwin()
         quit()
     elif snake[0][0] == -1:
         print('hit the ceiling, you lose!')
+        print('score: ', points)
         curses.endwin()
         quit()
     elif snake[0][1] == -1:
         print('hit the left wall, you lose!')
+        print('score: ', points)
         curses.endwin()
         quit()
     elif snake[0][1] == sw:
         print('hit the right wall, you lose!')
+        print('score: ', points)
         curses.endwin()
         quit()
     elif snake[0] in snake[1:]:
         print('ran into snake body, you lose!')
+        print('score: ', points)
         curses.endwin()
         quit()
 
